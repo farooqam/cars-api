@@ -5,6 +5,7 @@ module.exports = {
     "rules": {
         "linebreak-style": [ ERROR, "windows" ],
         "indent": [ ERROR, 4 ],
-        "no-unused-vars": [ERROR, {"args": "after-used", "argsIgnorePattern": "^_"}]
+        "no-unused-vars": [ERROR, {"args": "after-used", "argsIgnorePattern": "^_"}],
+        "no-underscore-dangle": [ERROR, { "allowAfterThis": true }]
     }
 };
