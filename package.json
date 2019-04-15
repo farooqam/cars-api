@@ -1,0 +1,35 @@
+{
+  "name": "cars-api",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon src/index.js",
+    "start-debug": "node --inspect=0.0.0.0 ./src/index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/farooqam/cars-api.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/farooqam/cars-api/issues"
+  },
+  "homepage": "https://github.com/farooqam/cars-api#readme",
+  "devDependencies": {
+    "eslint": "^5.15.3",
+    "eslint-config-airbnb-base": "^13.1.0",
+    "eslint-plugin-import": "^2.16.0",
+    "nodemon": "^1.18.10"
+  },
+  "dependencies": {
+    "halson": "^3.0.0",
+    "restify": "^8.3.0",
+    "restify-errors": "^7.0.0",
+    "restify-router": "^0.5.1",
+    "swagger-node-restify": "^0.1.2",
+    "winston": "^3.2.1"
+  }
+}
