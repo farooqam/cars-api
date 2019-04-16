@@ -26,6 +26,8 @@
   },
   "dependencies": {
     "halson": "^3.0.0",
+    "minimist": "^1.2.0",
+    "mongoose": "^5.5.1",
     "restify": "^8.3.0",
     "restify-errors": "^7.0.0",
     "restify-router": "^0.5.1",

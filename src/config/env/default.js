@@ -11,7 +11,7 @@ const config = {
         format: 'json',
     },
     database: {
-        host: 'localhost',
+        host: 'mongodb://localhost:27017',
         name: 'carsdb',
     },
 };
