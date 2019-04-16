@@ -8,8 +8,7 @@
             "type": "node",
             "request": "launch",
             "name": "Launch Node",
-            "program": "${workspaceFolder}\\src\\index.js",
-            "args": ["--seed"],
+            "program": "${workspaceFolder}\\src\\seed.js",
             "env": {
                 "NODE_ENV":"development"
             }
