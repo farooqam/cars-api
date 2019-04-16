@@ -1,8 +1,9 @@
 
 const db = require('./db');
 const seedConfigs = require('../seed/configs/configs');
+const logger = require('./logger')();
 
-const seed = (logger) => {
+const seed = () => {
     seedConfigs.forEach((sc) => {
         const { model } = sc;
 

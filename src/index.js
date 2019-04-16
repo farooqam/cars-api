@@ -1,5 +1,4 @@
 const restify = require('restify');
-const minimist = require('minimist');
 const config = require('./services/config')();
 const logger = require('./services/logger')();
 const db = require('./services/db');
@@ -7,16 +6,6 @@ const db = require('./services/db');
 const restifyPlugins = restify.plugins;
 
 db.connect(config, logger);
-
-const commandArgs = minimist(process.argv.slice(2));
-
-if (commandArgs) {
-    if (commandArgs.seed) {
-        // eslint-disable-next-line global-require
-        const seeder = require('./services/dbSeeder');
-        seeder.seed(logger);
-    }
-}
 
 const server = restify.createServer(config.server);
 server.use(restifyPlugins.queryParser({ mapParams: true }));
