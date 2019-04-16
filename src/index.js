@@ -16,7 +16,7 @@ const commandArgs = minimist(process.argv.slice(2));
 if (commandArgs) {
     if (commandArgs.seed) {
         // eslint-disable-next-line global-require
-        const seeder = require('./deployment/seeders/makeSeeder');
+        const seeder = require('./services/dbSeeder');
         seeder.seed(logger);
     }
 }
