@@ -5,7 +5,7 @@ mongoose.Promise = global.Promise;
 const connect = (config, logger) => {
     mongoose.connect(
         `${config.database.host}/${config.database.name}`, {
-            connectTimeoutMS: 5000,
+            connectTimeoutMS: config.database.connectTimeoutMs,
             useNewUrlParser: true,
         },
     );

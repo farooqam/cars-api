@@ -1,8 +1,8 @@
 const restify = require('restify');
+const minimist = require('minimist');
 const configFactory = require('./config/configFactory');
 const loggerFactory = require('./logging/loggerFactory');
 const db = require('./services/db');
-const minimist = require('minimist');
 
 const restifyPlugins = restify.plugins;
 
@@ -18,7 +18,6 @@ if (commandArgs) {
         // eslint-disable-next-line global-require
         const seeder = require('./deployment/seeders/makeSeeder');
         seeder.seed(logger);
-        process.exit();
     }
 }
 

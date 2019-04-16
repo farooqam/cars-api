@@ -13,6 +13,7 @@ const config = {
     database: {
         host: 'mongodb://localhost:27017',
         name: 'carsdb',
+        connectTimeoutMs: 5000,
     },
 };
 

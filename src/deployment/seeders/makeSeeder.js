@@ -19,24 +19,28 @@ const makes = [
 const seed = (logger) => {
     model.deleteMany()
         .exec()
-        .then(() => logger.info('makesSeeder.seed: Makes deleted.'));
+        .then(() => logger.info('makesSeeder.seed: Makes deleted.'))
+        .then(() => {
+            const commands = [];
 
-    const commands = [];
+            makes.forEach((m) => {
+                commands.push(
+                    model.create({
+                        name: m.name,
+                        countryOfOrigin: m.countryOfOrigin,
+                    }),
+                );
+            });
 
-    makes.forEach((m) => {
-        commands.push(
-            model.create({
-                name: m.name,
-                countryOfOrigin: m.countryOfOrigin,
-            }),
-        );
-    });
+            logger.info('makesSeeder.seed: Seeding database.');
 
-    logger.info('makesSeeder.seed: Seeding database.');
-
-    Promise.all(commands)
-        .then(_r => db.close())
-        .catch(error => logger.error(`makesSeeder.seed: ${error}`));
+            return commands;
+        })
+        .then((commands) => {
+            Promise.all(commands)
+                .then(_r => db.close())
+                .catch(error => logger.error(`makesSeeder.seed: ${error}`));
+        });
 };
 
 module.exports = {
