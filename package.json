@@ -30,7 +30,6 @@
     "morgan": "^1.9.1",
     "restify": "^8.3.0",
     "restify-errors": "^7.0.0",
-    "restify-router": "^0.5.1",
     "swagger-node-restify": "^0.1.2",
     "winston": "^3.2.1"
   }
