@@ -25,8 +25,6 @@ restify.defaultResponseHeaders = (_data) => {
     this.header('Access-Control-Allow-Origin', '*');
 };
 
-const makesRouter = require('./routers/makesRouter')(logger);
-
-makesRouter.applyRoutes(server);
+require('./controllers/controllers')(server, logger);
 
 server.listen(config.server.port, () => logger.info(`Server listening on port ${config.server.port}.`));
