@@ -1,6 +1,7 @@
 const restify = require('restify');
 const morgan = require('morgan');
 const httpStatus = require('http-status-codes');
+const { cid } = require('restify-correlation-id');
 const config = require('./services/config')();
 const logger = require('./services/logger')();
 const db = require('./services/db');
@@ -11,9 +12,19 @@ db.connect(config, logger);
 
 const server = restify.createServer(config.server);
 
-server.on('InternalServer', (_req, res, error, cb) => {
-    logger.error(error);
-    res.send(httpStatus.INTERNAL_SERVER_ERROR, 'Oops! An error occurred. It\'s not your fault but ours.');
+server.pre(cid());
+
+server.use((req, _res, next) => {
+    logger.info(`index.request.${req.cid}`);
+    next();
+});
+
+server.on('InternalServer', (req, res, error, cb) => {
+    logger.error(`${error}.${req.cid}`);
+    res.send(httpStatus.INTERNAL_SERVER_ERROR, {
+        message: 'Oops! An error occurred. It\'s not your fault but ours',
+        requestId: req.cid,
+    });
     cb();
 });
 
