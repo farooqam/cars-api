@@ -6,9 +6,9 @@ const { Router } = require('restify-router');
 const router = (logger) => {
     const get = (_req, res, _next) => {
         const makes = [
-            'Ford',
-            'BMW',
-            'Kia',
+            { name: 'Ford', countryOfOrigin: 'USA' },
+            { name: 'BMW', countryOfOrigin: 'GER' },
+            { name: 'Kia', countryOfOrigin: 'KOR' },
         ];
 
         logger.debug('makesRouter.get');
