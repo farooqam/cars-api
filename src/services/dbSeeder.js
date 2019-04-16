@@ -1,6 +1,6 @@
 
 const db = require('./db');
-const seedConfigs = require('../deployment/data/index');
+const seedConfigs = require('../seed/configs/configs');
 
 const seed = (logger) => {
     seedConfigs.forEach((sc) => {
