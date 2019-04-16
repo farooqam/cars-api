@@ -29,6 +29,7 @@
     "mongoose": "^5.5.1",
     "morgan": "^1.9.1",
     "restify": "^8.3.0",
+    "restify-correlation-id": "^1.0.1",
     "restify-errors": "^7.0.0",
     "swagger-node-restify": "^0.1.2",
     "winston": "^3.2.1"
