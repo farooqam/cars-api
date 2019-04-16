@@ -1,6 +1,7 @@
 const { createLogger, format, transports } = require('winston');
+const config = require('./config')();
 
-const create = (config) => {
+module.exports = () => {
     const getFormat = () => {
         switch (config.logging.format) {
         case 'simple':
@@ -25,8 +26,4 @@ const create = (config) => {
     });
 
     return logger;
-};
-
-module.exports = {
-    create,
 };

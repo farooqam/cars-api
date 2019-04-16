@@ -1,13 +1,10 @@
 const restify = require('restify');
 const minimist = require('minimist');
-const configFactory = require('./config/configFactory');
-const loggerFactory = require('./logging/loggerFactory');
+const config = require('./services/config')();
+const logger = require('./services/logger')();
 const db = require('./services/db');
 
 const restifyPlugins = restify.plugins;
-
-const config = configFactory.create(process.env.NODE_ENV);
-const logger = loggerFactory.create(config);
 
 db.connect(config, logger);
 
