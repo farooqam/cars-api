@@ -1,18 +1,20 @@
 /* eslint-disable func-names */
-const halson = require('halson');
-
 const { Router } = require('restify-router');
+const httpStatus = require('http-status-codes');
+const errors = require('restify-errors');
+const Make = require('../models/make');
+const queryOptions = require('../models/constants').QUERYOPTIONS;
 
 const router = (logger) => {
     const get = (_req, res, _next) => {
-        const makes = [
-            { name: 'Ford', countryOfOrigin: 'USA' },
-            { name: 'BMW', countryOfOrigin: 'GER' },
-            { name: 'Kia', countryOfOrigin: 'KOR' },
-        ];
-
         logger.debug('makesRouter.get');
-        res.send(halson(makes));
+
+        Make.find({}, queryOptions.EXCLUDE_METADATA_ATTRIBUTES).exec((error, makes) => {
+            if (error) {
+                return _next(new errors.InternalServerError(error));
+            }
+            return res.send(httpStatus.OK, makes);
+        });
     };
 
     const r = new Router();
