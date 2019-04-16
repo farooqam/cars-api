@@ -1,4 +1,5 @@
 const restify = require('restify');
+const morgan = require('morgan');
 const config = require('./services/config')();
 const logger = require('./services/logger')();
 const db = require('./services/db');
@@ -8,6 +9,7 @@ const restifyPlugins = restify.plugins;
 db.connect(config, logger);
 
 const server = restify.createServer(config.server);
+server.use(morgan(config.logging.morgan.config, { stream: logger.stream }));
 server.use(restifyPlugins.queryParser({ mapParams: true }));
 server.use(restifyPlugins.bodyParser());
 

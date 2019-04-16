@@ -9,6 +9,9 @@ const config = {
     logging: {
         level: 'error',
         format: 'json',
+        morgan: {
+            config: 'combined',
+        },
     },
     database: {
         host: 'mongodb://localhost:27017',

@@ -25,5 +25,11 @@ module.exports = () => {
         transports: [new transports.Console()],
     });
 
+    logger.stream = {
+        write(message, _encoding) {
+            logger.info(message);
+        },
+    };
+
     return logger;
 };
