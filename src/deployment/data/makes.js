@@ -1,4 +1,4 @@
-const makes = [
+const seedData = [
     {
         name: 'Ford',
         countryOfOrigin: 'USA',
@@ -13,12 +13,12 @@ const makes = [
     },
 ];
 
-module.exports = {
+const seedConfig = {
     // eslint-disable-next-line global-require
     model: require('../../models/make'),
     name: 'make',
     friendlyName: 'Makes',
-    values: makes,
+    values: seedData,
     mapping(model) {
         return {
             name: model.name,
@@ -26,3 +26,5 @@ module.exports = {
         };
     },
 };
+
+module.exports = seedConfig;

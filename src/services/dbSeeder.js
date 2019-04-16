@@ -1,28 +1,28 @@
 
 const db = require('./db');
-const seedData = require('../deployment/data/index');
+const seedConfigs = require('../deployment/data/index');
 
 const seed = (logger) => {
-    seedData.forEach((sd) => {
-        const { model } = sd;
+    seedConfigs.forEach((sc) => {
+        const { model } = sc;
 
         model.deleteMany().exec()
-            .then(() => logger.info(`seeder.seed.${sd.friendlyName}: models deleted`))
+            .then(() => logger.info(`seeder.seed.${sc.friendlyName}: models deleted`))
             .then(() => {
                 const commands = [];
-                sd.values.forEach((val) => {
+                sc.values.forEach((val) => {
                     commands.push(
-                        model.create(sd.mapping(val)),
+                        model.create(sc.mapping(val)),
                     );
                 });
 
-                logger.info(`seeder.seed.${sd.friendlyName}: models created`);
+                logger.info(`seeder.seed.${sc.friendlyName}: models created`);
                 return commands;
             })
             .then((commands) => {
                 Promise.all(commands)
                     .then(_r => db.close())
-                    .catch(error => logger.error(`seeder.seed.${sd.friendlyName}: ${error}`));
+                    .catch(error => logger.error(`seeder.seed.${sc.friendlyName}: ${error}`));
             });
     });
 };
