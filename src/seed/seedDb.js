@@ -39,34 +39,36 @@ const models = [
 
 db.connect(config, logger);
 
-// Delete all makes then insert.
-Make.deleteMany().then(() => logger.info('seedDb.Make: models deleted'))
+let promises = [];
+
+Make.deleteMany()
+    .then(() => logger.info('seedDb.Make: models deleted'))
     .then(() => {
+        promises = [];
         makes.forEach((make) => {
-            Make.create({
+            promises.push(Make.create({
                 name: make.name,
                 countryOfOrigin: make.countryOfOrigin,
-            })
-                .then(() => {
-                    logger.info('seedDb.Make: models created');
-                })
-                .then(() => {
-                    Model.deleteMany().then(() => logger.info('seedDb.Model: models deleted'));
-                })
-                .then(() => {
-                    models.forEach((model) => {
-                        Make.findOne({ name: model.make })
-                            .then((m) => {
-                                Model.create({
-                                    name: model.name,
-                                    year: model.year,
-                                    m,
-                                })
-                                    .then(() => {
-                                        logger.info('seedDb.Model: models created');
-                                    });
-                            });
-                    });
-                });
+            }));
         });
+
+        return promises;
+    })
+    .then((p) => {
+        Promise.all(p)
+            .then(_ => logger.info('seedDb.Make: models created.'))
+            .then(() => Model.deleteMany())
+            .then(() => {
+                models.forEach((model) => {
+                    Make.findOne({ name: model.make })
+                        .then((make) => {
+                            Model.create({
+                                name: model.name,
+                                year: model.year,
+                                make,
+                            })
+                                .then(() => logger.info('seedDb.Model: model created'));
+                        });
+                });
+            });
     });
