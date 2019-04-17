@@ -2,9 +2,7 @@ const restify = require('restify');
 const morgan = require('morgan');
 const httpStatus = require('http-status-codes');
 const { cid } = require('restify-correlation-id');
-const config = require('./services/config')();
-const logger = require('./services/logger')();
-const db = require('./services/db');
+const { config, logger, db } = require('./services/services');
 
 const restifyPlugins = restify.plugins;
 
