@@ -1,9 +1,6 @@
 const _ = require('lodash');
-const Make = require('./models/make');
-const Model = require('./models/model');
-const config = require('./services/config')();
-const logger = require('./services/logger')();
-const db = require('./services/db');
+const { Make, Model } = require('./models/index');
+const { config, logger, db } = require('./services/services');
 
 const makes = [
     {
