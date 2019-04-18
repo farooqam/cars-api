@@ -4,19 +4,21 @@ const errors = require('restify-errors');
 const Make = require('../models/make');
 const queryOptions = require('../models/constants').QUERYOPTIONS;
 
-const addController = (server, logger) => {
+const controller = (server, logger) => {
     server.get('/makes', (req, res, next) => {
         logger.debug(`makesRouter.get.${req.cid}`);
 
-        Make.find({}, queryOptions.EXCLUDE_METADATA_ATTRIBUTES).exec((error, makes) => {
-            if (error) {
-                return next(new errors.InternalServerError(error));
-            }
-            return res.send(httpStatus.OK, makes);
-        });
+        Make.find({}, queryOptions.EXCLUDE_METADATA_ATTRIBUTES)
+            .then((foundMakes) => {
+                res.send(httpStatus.OK, foundMakes);
+                next();
+            })
+            .catch((error) => {
+                next(new errors.InternalServerError(error));
+            });
     });
 
     return server;
 };
 
-module.exports = addController;
+module.exports = controller;
