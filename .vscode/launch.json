@@ -8,7 +8,7 @@
             "type": "node",
             "request": "launch",
             "name": "Launch Node",
-            "program": "${workspaceFolder}\\src\\seed\\seedDb.js",
+            "program": "${workspaceFolder}\\src\\index.js",
             "env": {
                 "NODE_ENV":"development"
             }
