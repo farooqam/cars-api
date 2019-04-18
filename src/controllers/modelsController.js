@@ -6,11 +6,25 @@ const Model = require('../models/model');
 const Make = require('../models/make');
 const queryOptions = require('../models/constants').QUERYOPTIONS;
 
+const createResponseModel = (make, models) => {
+    const repsonseModels = [];
+
+    models.forEach((model) => {
+        repsonseModels.push({
+            make,
+            name: model.name,
+            year: model.year,
+        });
+    });
+
+    return repsonseModels;
+};
+
 const controller = (server, logger) => {
     server.get('/models/:make', (req, res, next) => {
         logger.debug(`modelsController.get.${req.cid} make=${req.params.make}`);
 
-        Make.findOne({ name: req.params.make })
+        Make.findOne({ name: req.params.make }).collation({ locale: 'en', strength: 1 })
             .then((foundMake) => {
                 if (!foundMake) {
                     throw new errors.NotFoundError();
@@ -23,7 +37,7 @@ const controller = (server, logger) => {
                 }, queryOptions.EXCLUDE_METADATA_ATTRIBUTES);
             })
             .then((foundModels) => {
-                res.send(httpStatus.OK, foundModels);
+                res.send(httpStatus.OK, createResponseModel(req.params.make, foundModels));
                 next();
             })
             .catch((error) => {
