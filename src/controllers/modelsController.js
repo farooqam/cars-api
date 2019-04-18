@@ -1,5 +1,5 @@
 /* eslint-disable func-names */
-const { ObjectId } = require('mongoose').Types; 
+const { ObjectId } = require('mongoose').Types;
 const httpStatus = require('http-status-codes');
 const errors = require('restify-errors');
 const Model = require('../models/model');
@@ -17,7 +17,7 @@ const controller = (server, logger) => {
                 }
                 // eslint-disable-next-line no-underscore-dangle
                 logger.debug(`modelsController.get.${req.cid} Getting models for make = ${foundMake.name} with id = ${foundMake._id.toString()}`);
-                return Model.find({ 
+                return Model.find({
                     // eslint-disable-next-line no-underscore-dangle
                     make: ObjectId(foundMake._id.toString()),
                 }, queryOptions.EXCLUDE_METADATA_ATTRIBUTES);
@@ -27,7 +27,11 @@ const controller = (server, logger) => {
                 next();
             })
             .catch((error) => {
-                next(error);
+                if (error.name.startsWith('Mongo')) {
+                    next(new errors.InternalServerError(error));
+                } else {
+                    next(error);
+                }
             });
     });
 
