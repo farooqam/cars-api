@@ -12,18 +12,22 @@ const controller = (server, logger) => {
 
         Make.findOne({ name: req.params.make })
             .then((foundMake) => {
+                if (!foundMake) {
+                    throw new errors.NotFoundError();
+                }
                 // eslint-disable-next-line no-underscore-dangle
                 logger.debug(`modelsController.get.${req.cid} Getting models for make = ${foundMake.name} with id = ${foundMake._id.toString()}`);
-                // eslint-disable-next-line no-underscore-dangle
-                Model.find({ make: foundMake._id.toString() }, queryOptions.EXCLUDE_METADATA_ATTRIBUTES)
-                    .then(foundModels => foundModels);
+                return Model.find({ 
+                    // eslint-disable-next-line no-underscore-dangle
+                    make: ObjectId(foundMake._id.toString()),
+                }, queryOptions.EXCLUDE_METADATA_ATTRIBUTES);
             })
             .then((foundModels) => {
                 res.send(httpStatus.OK, foundModels);
                 next();
             })
             .catch((error) => {
-                next(new errors.InternalServerError(error));
+                next(error);
             });
     });
 
