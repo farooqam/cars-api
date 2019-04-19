@@ -7,6 +7,7 @@ const config = {
         handleUncaughtExceptions: true,
     },
     secret: 'c4bf2597-7e36-4420-aa4a-e27e2f740ad3',
+    apiKey: 'df5b400d-b2a6-470d-b4ed-8304f252a2d6',
     logging: {
         level: 'error',
         format: 'json',
