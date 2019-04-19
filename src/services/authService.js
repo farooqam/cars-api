@@ -11,7 +11,7 @@ const apiKeyAuthorizationHandler = (req, res, next) => {
         const expectedSignature = cryptoService.signData(config.apiKey, config.secret);
 
         if (expectedSignature === reqSignature) {
-            logger.info(`index.pre.auth.${req.cid} Authorized request.`);
+            logger.info('Authorized request.', { cid: req.cid, m: 'index.pre.auth' });
             next();
             return;
         }
